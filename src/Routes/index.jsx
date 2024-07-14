@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import authRoute from "./authRoutes";
-import dashboardRoute from "./dashboardRoute";
+import signinRoute from "./signinRoute";
 
-const router = createBrowserRouter([authRoute, dashboardRoute]);
+const router = createBrowserRouter([signinRoute]);
 export default router;
