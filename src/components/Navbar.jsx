@@ -7,37 +7,40 @@ import {
   Drawer,
   ScrollArea,
   rem,
-  useMantineTheme,
 } from "@mantine/core";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./Navbar.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
+  const navigate = useNavigate();
   return (
     <Box>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <MantineLogo size={30} />
+          <h3>DP ChatBot</h3>
 
           <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
+            <a href="#hero" className={classes.link}>
               Home
             </a>
 
-            <a href="#" className={classes.link}>
-              Learn
+            <a href="#features" className={classes.link}>
+              Features
             </a>
-            <a href="#" className={classes.link}>
-              Academy
+            <a href="#faqs" className={classes.link}>
+              FAQs
             </a>
           </Group>
 
           <Group visibleFrom="sm">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <Button variant="default" onClick={() => navigate("/login")}>
+              Log in
+            </Button>
+            <Button onClick={() => navigate("/signup")}>Sign up</Button>
           </Group>
 
           <Burger

@@ -1,4 +1,7 @@
 .header {
+  position: "sticky";
+  top: 0;
+  z-index: 10;
   height: 3.75rem; /* 60px */
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);

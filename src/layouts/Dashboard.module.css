@@ -1,0 +1,10 @@
+.navlink {
+  color: "white";
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.navlink:hover {
+  background-color: rgba(255, 255, 255, 0.678);
+  color: black;
+}
