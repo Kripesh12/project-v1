@@ -14,9 +14,22 @@ import {
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import classes from "./ForgetPasswordPage.module.css";
+import { useState } from "react";
+import api from "../../api";
+import { toast } from "react-toastify";
 
 export default function ForgetPasswordPage() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+
+  async function handleSubmit() {
+    try {
+      await api.post("/forgot-password", { email: email });
+      toast.success("Reset email send");
+    } catch (e) {
+      toast.error(e.message);
+    }
+  }
   return (
     <Container size={460} my={30}>
       <Title className={classes.title} ta="center">
@@ -27,7 +40,12 @@ export default function ForgetPasswordPage() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
-        <TextInput label="Your email" placeholder="me@mantine.dev" required />
+        <TextInput
+          label="Your email"
+          placeholder="me@mantine.dev"
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <Group justify="space-between" mt="lg" className={classes.controls}>
           <Anchor c="dimmed" size="sm" className={classes.control}>
             <Center inline>
@@ -40,7 +58,9 @@ export default function ForgetPasswordPage() {
               </Box>
             </Center>
           </Anchor>
-          <Button className={classes.control}>Reset password</Button>
+          <Button className={classes.control} onClick={handleSubmit}>
+            Reset password
+          </Button>
         </Group>
       </Paper>
     </Container>

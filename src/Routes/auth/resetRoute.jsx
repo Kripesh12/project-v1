@@ -1,8 +1,8 @@
-import ForgetPasswordPage from "../../page/auth/ForgetPasswordPage";
+import PasswordReset from "../../page/auth/PasswordReset";
 
 const resetRoute = {
   path: "/reset",
-  element: <ForgetPasswordPage />,
+  element: <PasswordReset />,
 };
 
 export default resetRoute;
