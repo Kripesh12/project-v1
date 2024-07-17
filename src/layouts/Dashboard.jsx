@@ -2,17 +2,19 @@ import { AppShell, Box, Burger, Flex, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { FaHome, FaLongArrowAltUp } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
+import NavbarDashboard from "../components/NavbarDashboard";
 export default function Dashboard() {
   const [opened, { toggle }] = useDisclosure();
   const navigate = useNavigate();
   const user = useContext(UserContext);
   const { token } = user;
   const navlinkList = [
-    { text: "Home", path: "home", icon: <FaHome /> },
     { text: "Prompt", path: "prompt", icon: <FaLongArrowAltUp /> },
+    { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   console.log(token.length);
   if (token.length == 0) {
@@ -32,7 +34,7 @@ export default function Dashboard() {
         {/* Header */}
         <AppShell.Header>
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div>Logo</div>
+          <NavbarDashboard />
         </AppShell.Header>
 
         {/* Navbar */}

@@ -13,8 +13,12 @@ import {
 import classes from "./SignupPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
+import { useState } from "react";
+import api from "../../api";
+import { toast } from "react-toastify";
 export default function SignupPage() {
   const navigate = useNavigate();
+  const [loading, setIsloading] = useState(false);
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -41,6 +45,25 @@ export default function SignupPage() {
     },
   });
 
+  async function handelCreateUser() {
+    const userData = {
+      name: form.getValues().name,
+      email: form.getValues().email,
+      password: form.getValues().password,
+    };
+    try {
+      setIsloading(true);
+      await api.post("/create-user", userData);
+      navigate("/login");
+      toast.success("Signup Sucessfully");
+    } catch (e) {
+      toast.error(e.message);
+      throw e;
+    } finally {
+      setIsloading(false);
+    }
+  }
+
   return (
     <Container size={420} my={40}>
       <Title ta="center" className={classes.title}>
@@ -54,7 +77,7 @@ export default function SignupPage() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit(console.log)}>
+        <form onSubmit={form.onSubmit(handelCreateUser)}>
           <TextInput
             label="Name"
             placeholder="Jhon Doe"
@@ -96,7 +119,7 @@ export default function SignupPage() {
               Forgot password?
             </Anchor>
           </Group>
-          <Button fullWidth mt="xl" type="submit">
+          <Button fullWidth mt="xl" type="submit" loading={loading}>
             Sign in
           </Button>
         </form>

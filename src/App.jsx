@@ -5,9 +5,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { createContext, useState } from "react";
 export const UserContext = createContext();
 function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(
+    window.localStorage.getItem("token") || ""
+  );
 
   function UpdateToken(tkn) {
+    window.localStorage.setItem("token", tkn);
     setToken(tkn);
   }
   return (

@@ -1,4 +1,5 @@
 import Dashboard from "../layouts/Dashboard";
+import LogoutPage from "../page/auth/LogoutPage";
 import Prompt from "../page/Prompt";
 
 const dashboardRoute = {
@@ -7,12 +8,12 @@ const dashboardRoute = {
 
   children: [
     {
-      path: "home",
-      element: <h1>Landing Page</h1>,
-    },
-    {
       path: "prompt",
       element: <Prompt />,
+    },
+    {
+      path: "logout",
+      element: <LogoutPage />,
     },
   ],
 };
