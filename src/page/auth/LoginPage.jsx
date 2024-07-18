@@ -37,6 +37,7 @@ export default function LoginPage() {
       settLoading(true);
       const data = await api.post("/login", form.getValues());
       UpdateToken(data.data.token);
+      localStorage.setItem("email", form.getValues().email);
       navigate("/dashboard");
       toast.success("Login Sucessfully");
     } catch (e) {
@@ -86,7 +87,7 @@ export default function LoginPage() {
             <Anchor
               component="button"
               size="sm"
-              onClick={() => navigate("/reset")}
+              onClick={() => navigate("/forget")}
             >
               Forgot password?
             </Anchor>

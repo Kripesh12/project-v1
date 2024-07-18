@@ -29,7 +29,10 @@ function Prompt() {
       setLoading(true);
       const data = await api.post(
         "/ask-question",
-        { prompt },
+        {
+          email: localStorage.getItem("email"),
+          prompt: prompt,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,39 +1,40 @@
-import { PasswordInput, Paper, Title, Container, Button } from "@mantine/core";
+import {
+  PasswordInput,
+  Paper,
+  Title,
+  Container,
+  Button,
+  Anchor,
+} from "@mantine/core";
 import classes from "./PasswordReset.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@mantine/form";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import api from "../../api";
 import { toast } from "react-toastify";
-import { UserContext } from "../../App";
 
 export default function PasswordReset() {
-  const user = useContext(UserContext);
-  const { token, UpdateToken } = user;
+  const { token } = useParams();
   const navigate = useNavigate();
   const [loading, settLoading] = useState(false);
   const form = useForm({
-    mode: "uncontrolled",
-    initialValues: { email: "", password: "" },
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) =>
+      newPassword: (value) =>
         value.length < 6 ? "Password must be atleast 6 character long" : null,
+      confirmPassword: (value, values) =>
+        value !== values.newPassword ? "Password didnot match" : null,
     },
   });
   async function handelSubmit() {
     try {
       settLoading(true);
-      const data = await api.post("/login", form.getValues());
+      const data = await api.post(`/reset-password/${token}`, {
+        newPassword: form.getValues().newPassword,
+      });
       UpdateToken(data.data.token);
-      navigate("/dashboard");
-      toast.success("Login Sucessfully");
+      navigate("/login");
+      toast.success("Password Reset Sucessfully");
     } catch (e) {
-      console.log();
-      if (e.response.status == 400) {
-        toast.error("Incorrect login or password");
-        return;
-      }
       toast.error(e.message);
     } finally {
       settLoading(false);
@@ -50,19 +51,32 @@ export default function PasswordReset() {
           <PasswordInput
             label="New Password"
             placeholder="password"
-            key={form.key("email")}
-            {...form.getInputProps("email")}
+            key={form.key("newPassword")}
+            {...form.getInputProps("newPassword")}
           />
           <PasswordInput
             label="Reenter Password"
             placeholder="reenter password"
             mt="md"
-            key={form.key("password")}
-            {...form.getInputProps("password")}
+            key={form.key("confirmPassword")}
+            {...form.getInputProps("confirmPassword")}
           />
-          <Button fullWidth mt="xl" type="submit" loading={loading}>
+          <Button
+            fullWidth
+            mt="xl"
+            type="submit"
+            loading={loading}
+            onClick={handelSubmit}
+          >
             Reset Password
           </Button>
+          <Anchor
+            size="sm"
+            component="button"
+            onClick={() => navigate("/login")}
+          >
+            Go back to login
+          </Anchor>
         </form>
       </Paper>
     </Container>

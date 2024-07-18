@@ -1,7 +1,12 @@
 import { AppShell, Box, Burger, Flex, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { FaHome, FaLongArrowAltUp } from "react-icons/fa";
+import {
+  FaAddressBook,
+  FaHome,
+  FaLongArrowAltUp,
+  FaRegAddressBook,
+} from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
@@ -14,6 +19,7 @@ export default function Dashboard() {
   const { token } = user;
   const navlinkList = [
     { text: "Prompt", path: "prompt", icon: <FaLongArrowAltUp /> },
+    { text: "Feed Knowledge", path: "knowledge", icon: <FaAddressBook /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   console.log(token.length);

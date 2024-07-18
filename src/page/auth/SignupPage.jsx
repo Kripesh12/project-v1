@@ -57,7 +57,11 @@ export default function SignupPage() {
       navigate("/login");
       toast.success("Signup Sucessfully");
     } catch (e) {
-      toast.error(e.message);
+      if (e.response?.data.error) {
+        toast.error(e.response.data.error);
+        return;
+      }
+      toast.error("Innternal server error");
       throw e;
     } finally {
       setIsloading(false);

@@ -1,7 +1,7 @@
 import PasswordReset from "../../page/auth/PasswordReset";
 
 const resetRoute = {
-  path: "/reset",
+  path: "/reset-password/:token",
   element: <PasswordReset />,
 };
 
