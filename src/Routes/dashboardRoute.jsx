@@ -1,6 +1,6 @@
 import Dashboard from "../layouts/Dashboard";
 import LogoutPage from "../page/auth/LogoutPage";
-import Knowledge from "../page/Knowledge";
+import FeedKnowledge from "../page/FeedKnowledge";
 import Prompt from "../page/Prompt";
 
 const dashboardRoute = {
@@ -18,7 +18,7 @@ const dashboardRoute = {
     },
     {
       path: "knowledge",
-      element: <Knowledge />,
+      element: <FeedKnowledge />,
     },
   ],
 };

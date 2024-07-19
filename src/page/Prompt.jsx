@@ -54,13 +54,14 @@ function Prompt() {
             Enter your question
           </Title>
           <Textarea
+            value={prompt}
             size="md"
             mb={10}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <Group>
             <Button onClick={handleSubmit}>Ask Question</Button>
-            <Button bg={"red"} onClick={() => setPrompt("Null")}>
+            <Button bg={"red"} onClick={() => setPrompt("")}>
               Clear
             </Button>
           </Group>
