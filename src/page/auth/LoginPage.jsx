@@ -38,7 +38,7 @@ export default function LoginPage() {
       const data = await api.post("/login", form.getValues());
       UpdateToken(data.data.token);
       localStorage.setItem("email", form.getValues().email);
-      navigate("/dashboard");
+      navigate("/dashboard/prompt");
       toast.success("Login Sucessfully");
     } catch (e) {
       if (e.response?.status == 400) {

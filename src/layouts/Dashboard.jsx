@@ -1,16 +1,15 @@
-import { AppShell, Box, Burger, Button, Flex, Paper } from "@mantine/core";
+import { AppShell, Burger, Button, Flex, Paper } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
   FaAddressBook,
   FaArrowLeft,
   FaArrowRight,
-  FaHome,
   FaLongArrowAltUp,
-  FaRegAddressBook,
 } from "react-icons/fa";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
+import { MdAttachMoney } from "react-icons/md";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
@@ -25,6 +24,7 @@ export default function Dashboard() {
     { text: "Prompt", path: "prompt", icon: <FaLongArrowAltUp /> },
     { text: "Feed Knowledge", path: "knowledge", icon: <FaAddressBook /> },
     { text: "Statistics", path: "stats", icon: <IoStatsChartSharp /> },
+    { text: "Pricing", path: "pricing", icon: <MdAttachMoney /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   // if (token.length == 0) {
@@ -38,7 +38,7 @@ export default function Dashboard() {
         breakpoint: "sm",
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
-      padding="xl"
+      padding="sm"
     >
       {/* Header */}
       <AppShell.Header>
@@ -56,12 +56,7 @@ export default function Dashboard() {
         <Flex direction="column" gap={10}>
           {navlinkList.map((item, index) => {
             return (
-              <NavLink
-                className={classes.navlink}
-                key={index}
-                to={item.path}
-                activeClassName={classes.active}
-              >
+              <NavLink className={classes.navlink} key={index} to={item.path}>
                 {item.icon} {item.text}
               </NavLink>
             );
@@ -70,7 +65,7 @@ export default function Dashboard() {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Button onClick={toggleDesktop} visibleFrom="sm">
+        <Button onClick={toggleDesktop} visibleFrom="sm" mb={20}>
           {desktopOpened ? <FaArrowLeft /> : <FaArrowRight />}
         </Button>
         <Outlet />

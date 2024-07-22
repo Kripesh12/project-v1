@@ -15,7 +15,7 @@ import { UserContext } from "../App";
 
 function Prompt() {
   const user = useContext(UserContext);
-  const { token } = user;
+  const { token, updateCount } = user;
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,6 +40,7 @@ function Prompt() {
         }
       );
       setResponse(data.data.formattedText);
+      updateCount(data.data.count);
     } catch (e) {
       toast.error(e.message);
     } finally {
@@ -48,7 +49,7 @@ function Prompt() {
   }
   return (
     <Center>
-      <Box w={820}>
+      <Box w={820} mt={50} p={20}>
         <Paper>
           <Title order={3} mb={20} c={"#383838"}>
             Enter your question

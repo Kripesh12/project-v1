@@ -1,9 +1,8 @@
-import { Button, Flex, Paper, Text, Title } from "@mantine/core";
+import { Flex, Paper, Text, Title } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
 import { UserContext } from "../App";
-import { GrTechnology } from "react-icons/gr";
 
 function NavbarDashboard() {
   const user = useContext(UserContext);
@@ -33,8 +32,8 @@ function NavbarDashboard() {
   return (
     <Flex p={"10px 30px"} justify={"space-between"} align={"center"} mt={8}>
       <Paper>
-        <Title c={"blue"}>
-          <GrTechnology />
+        <Title c={"blue"} size={20}>
+          DP Chatbot
         </Title>
       </Paper>
       <Text>{userName}</Text>

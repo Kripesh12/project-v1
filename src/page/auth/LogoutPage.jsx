@@ -15,11 +15,11 @@ function LogoutPage() {
   return (
     <Center>
       <Box>
-        <Paper bg={"#cacaca"} w={293} ta={"center"} p={20}>
-          <Title fz={"h5"} mb={20}>
+        <Paper w={350} ta={"center"} p={40} withBorder={true} shadow="sm">
+          <Title fz={"h5"} mb={20} c={"#414141"}>
             Do you want to logout?
           </Title>
-          <Group justify="center">
+          <Group justify="center" mt={40}>
             <Button onClick={handelCancel}>Cancel</Button>
             <Button bg={"red"} onClick={handelLogout}>
               Logout

@@ -37,6 +37,9 @@ function FeedKnowledge() {
   }, []);
 
   async function onFeedKnowledge() {
+    if (!confirm("Do you want to feed knowledge ?")) {
+      return;
+    }
     if (knowledge === "") {
       alert("Paragraph cannot be empty");
       return;
@@ -56,6 +59,9 @@ function FeedKnowledge() {
   }
 
   async function onClearKnowledge() {
+    if (!confirm("Do you want to clear knowledge ?")) {
+      return;
+    }
     setLoading(true);
     try {
       await api.post("/create-paragraph", {
@@ -73,7 +79,7 @@ function FeedKnowledge() {
   return (
     <>
       <Center>
-        <Box w={820}>
+        <Box w={820} mt={50} p={20}>
           <Title order={3} mb={20} c={"#383838"}>
             Enter your paragraph
           </Title>
@@ -98,7 +104,14 @@ function FeedKnowledge() {
             </Paper>
           </Modal>
 
-          <Paper bg={"#bdbdbd"} mih={80} p={20} w={"100%"}>
+          <Paper
+            mih={80}
+            p={20}
+            w={"100%"}
+            shadow="sm"
+            withBorder={true}
+            c={"#2e2e2e"}
+          >
             <LoadingOverlay
               visible={loading}
               zIndex={1000}
