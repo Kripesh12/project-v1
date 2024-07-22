@@ -119,9 +119,6 @@ export default function SignupPage() {
               key={form.key("termsOfService")}
               {...form.getInputProps("tos", { type: "checkbox" })}
             />
-            <Anchor component="button" size="sm">
-              Forgot password?
-            </Anchor>
           </Group>
           <Button fullWidth mt="xl" type="submit" loading={loading}>
             Sign in

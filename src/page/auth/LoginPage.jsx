@@ -41,8 +41,7 @@ export default function LoginPage() {
       navigate("/dashboard");
       toast.success("Login Sucessfully");
     } catch (e) {
-      console.log();
-      if (e.response.status == 400) {
+      if (e.response?.status == 400) {
         toast.error("Incorrect login or password");
         return;
       }
