@@ -6,6 +6,7 @@ import {
   FaArrowLeft,
   FaArrowRight,
   FaLongArrowAltUp,
+  FaCode,
 } from "react-icons/fa";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -25,6 +26,7 @@ export default function Dashboard() {
     { text: "Feed Knowledge", path: "knowledge", icon: <FaAddressBook /> },
     { text: "Statistics", path: "stats", icon: <IoStatsChartSharp /> },
     { text: "Pricing", path: "pricing", icon: <MdAttachMoney /> },
+    { text: "Script", path: "script", icon: <FaCode /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   // if (token.length == 0) {

@@ -30,7 +30,7 @@ function Prompt() {
       const data = await api.post(
         "/ask-question",
         {
-          email: localStorage.getItem("email"),
+          id: localStorage.getItem("userId"),
           prompt: prompt,
         },
         {

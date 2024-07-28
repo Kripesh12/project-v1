@@ -1,86 +1,90 @@
-import {
-  Group,
-  Button,
-  Divider,
-  Box,
-  Burger,
-  Drawer,
-  ScrollArea,
-  rem,
-} from "@mantine/core";
-import { MantineLogo } from "@mantinex/mantine-logo";
+import { Menu, Group, Center, Burger, Container } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { IconChevronDown } from "@tabler/icons-react";
+import { MantineLogo } from "@mantinex/mantine-logo";
 import classes from "./Navbar.module.css";
-import { useNavigate } from "react-router-dom";
+
+const links = [
+  { link: "/about", label: "Features" },
+  {
+    link: "#1",
+    label: "Learn",
+    links: [
+      { link: "/docs", label: "Documentation" },
+      { link: "/resources", label: "Resources" },
+      { link: "/community", label: "Community" },
+      { link: "/blog", label: "Blog" },
+    ],
+  },
+  { link: "/about", label: "About" },
+  { link: "/pricing", label: "Pricing" },
+  {
+    link: "#2",
+    label: "Support",
+    links: [
+      { link: "/faq", label: "FAQ" },
+      { link: "/demo", label: "Book a demo" },
+      { link: "/forums", label: "Forums" },
+    ],
+  },
+];
 
 export default function Navbar() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-    useDisclosure(false);
-  const navigate = useNavigate();
-  return (
-    <Box>
-      <header className={classes.header}>
-        <Group justify="space-between" h="100%">
-          <h3>DP ChatBot</h3>
+  const [opened, { toggle }] = useDisclosure(false);
 
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#hero" className={classes.link}>
-              Home
+  const items = links.map((link) => {
+    const menuItems = link.links?.map((item) => (
+      <Menu.Item key={item.link}>{item.label}</Menu.Item>
+    ));
+
+    if (menuItems) {
+      return (
+        <Menu
+          key={link.label}
+          trigger="hover"
+          transitionProps={{ exitDuration: 0 }}
+          withinPortal
+        >
+          <Menu.Target>
+            <a
+              href={link.link}
+              className={classes.link}
+              onClick={(event) => event.preventDefault()}
+            >
+              <Center>
+                <span className={classes.linkLabel}>{link.label}</span>
+                <IconChevronDown size="0.9rem" stroke={1.5} />
+              </Center>
             </a>
+          </Menu.Target>
+          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+        </Menu>
+      );
+    }
 
-            <a href="#features" className={classes.link}>
-              Features
-            </a>
-            <a href="#faqs" className={classes.link}>
-              FAQs
-            </a>
-          </Group>
-
-          <Group visibleFrom="sm">
-            <Button variant="default" onClick={() => navigate("/login")}>
-              Log in
-            </Button>
-            <Button onClick={() => navigate("/signup")}>Sign up</Button>
-          </Group>
-
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-          />
-        </Group>
-      </header>
-
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        hiddenFrom="sm"
-        zIndex={1000000}
+    return (
+      <a
+        key={link.label}
+        href={link.link}
+        className={classes.link}
+        onClick={(event) => event.preventDefault()}
       >
-        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-          <Divider my="sm" />
+        {link.label}
+      </a>
+    );
+  });
 
-          <a href="#" className={classes.link}>
-            Home
-          </a>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
-
-          <Divider my="sm" />
-
-          <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+  return (
+    <header className={classes.header}>
+      <Container size={1200}>
+        <div className={classes.inner}>
+          <MantineLogo size={28} />
+          <Group gap={10} visibleFrom="sm">
+            {items}
           </Group>
-        </ScrollArea>
-      </Drawer>
-    </Box>
+          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
+        </div>
+      </Container>
+    </header>
   );
 }

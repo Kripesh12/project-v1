@@ -3,6 +3,7 @@ import LogoutPage from "../page/auth/LogoutPage";
 import FeedKnowledge from "../page/FeedKnowledge";
 import Pricing from "../page/Pricing";
 import Prompt from "../page/Prompt";
+import Script from "../page/Script";
 import Statistics from "../page/Statistics";
 
 const dashboardRoute = {
@@ -29,6 +30,10 @@ const dashboardRoute = {
     {
       path: "pricing",
       element: <Pricing />,
+    },
+    {
+      path: "script",
+      element: <Script />,
     },
   ],
 };

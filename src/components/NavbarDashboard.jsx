@@ -22,6 +22,7 @@ function NavbarDashboard() {
             },
           }
         );
+        localStorage.setItem("userId", res.data.id);
         setUserName(res.data.data);
       } catch (e) {
         toast.error(e);

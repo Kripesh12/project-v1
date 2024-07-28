@@ -1,61 +1,35 @@
 .header {
-  position: "sticky";
-  top: 0;
-  z-index: 10;
-  height: 3.75rem; /* 60px */
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
-  border-bottom: 0.0625rem solid /* 1px */
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding: 10px;
+  background: linear-gradient(
+    45deg,
+    #228be6 0%,
+    /* Blue */ #15aabf 100% /* Cyan */
+  );
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.inner {
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .link {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding-left: var(--mantine-spacing-md);
-  padding-right: var(--mantine-spacing-md);
+  display: block;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: 4px;
   text-decoration: none;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: #ffffff;
+  font-size: 18px;
   font-weight: 500;
-  font-size: var(--mantine-font-size-sm);
-
-  @media (max-width: 600px) {
-    /* mantine-breakpoint-sm (assuming 600px) */
-    height: 2.625rem; /* 42px */
-    width: 100%;
-  }
 
   &:hover {
-    background-color: light-dark(
-      var(--mantine-color-gray-0),
-      var(--mantine-color-dark-6)
-    );
+    border: 2px solid white;
   }
 }
 
-.subLink {
-  width: 100%;
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
-  border-radius: var(--mantine-radius-md);
-
-  &:hover {
-    background-color: light-dark(
-      var(--mantine-color-gray-0),
-      var(--mantine-color-dark-7)
-    );
-  }
-}
-
-.dropdownFooter {
-  background-color: light-dark(
-    var(--mantine-color-gray-0),
-    var(--mantine-color-dark-7)
-  );
-  margin: calc(var(--mantine-spacing-md) * -1);
-  margin-top: var(--mantine-spacing-sm);
-  padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
-  padding-bottom: var(--mantine-spacing-xl);
-  border-top: 0.0625rem solid /* 1px */
-    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+.linkLabel {
+  margin-right: 5px;
 }
