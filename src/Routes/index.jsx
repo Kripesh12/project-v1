@@ -5,6 +5,7 @@ import signupRoute from "./auth/signupRoute";
 import forgetRoute from "./auth/forgetRoute";
 import dashboardRoute from "./dashboardRoute";
 import resetRoute from "./auth/resetRoute";
+import verifiedSignupRoute from "./auth/verifiedSignupRoute";
 
 const router = createBrowserRouter([
   landingPageRoute,
@@ -13,5 +14,6 @@ const router = createBrowserRouter([
   forgetRoute,
   dashboardRoute,
   resetRoute,
+  verifiedSignupRoute,
 ]);
 export default router;

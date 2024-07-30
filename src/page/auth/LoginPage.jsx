@@ -20,7 +20,7 @@ import { UserContext } from "../../App";
 
 export default function LoginPage() {
   const user = useContext(UserContext);
-  const { token, UpdateToken } = user;
+  const { UpdateToken } = user;
   const navigate = useNavigate();
   const [loading, settLoading] = useState(false);
   const form = useForm({
@@ -35,9 +35,8 @@ export default function LoginPage() {
   async function handelSubmit() {
     try {
       settLoading(true);
-      const data = await api.post("/login", form.getValues());
+      const data = await api.post("/auth/login", form.getValues());
       UpdateToken(data.data.token);
-      localStorage.setItem("email", form.getValues().email);
       navigate("/dashboard/prompt");
       toast.success("Login Sucessfully");
     } catch (e) {
@@ -70,12 +69,14 @@ export default function LoginPage() {
         <form onSubmit={form.onSubmit(handelSubmit)}>
           <TextInput
             label="Email"
+            labelProps={{ mb: "8px" }}
             placeholder="you@mantine.dev"
             key={form.key("email")}
             {...form.getInputProps("email")}
           />
           <PasswordInput
             label="Password"
+            labelProps={{ mb: "8px" }}
             placeholder="Your password"
             mt="md"
             key={form.key("password")}

@@ -22,40 +22,39 @@ export default function SignupPage() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      name: "",
+      // name: "",
       email: "",
-      password: "",
-      tos: false,
-      confirmPassword: "",
+      // password: "",
+      // tos: false,
+      // confirmPassword: "",
     },
     validate: {
-      name: (value) => (value.length < 2 ? "Name must have two letters" : null),
+      // name: (value) => (value.length < 2 ? "Name must have two letters" : null),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      password: (value) =>
-        value.length < 6
-          ? "Password must be of atleast 6 characters"
-          : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-              value
-            )
-          ? null
-          : "Password must have atleast one uppercase, one lowercase, one letter and one special symbol",
-      tos: (value) => (value ? null : "Need to accept terms and condition"),
-      confirmPassword: (value, values) =>
-        value !== values.password ? "Password didnot match" : null,
+      // password: (value) =>
+      //   value.length < 6
+      //     ? "Password must be of atleast 6 characters"
+      //     : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+      //         value
+      //       )
+      //     ? null
+      //     : "Password must have atleast one uppercase, one lowercase, one letter and one special symbol",
+      // tos: (value) => (value ? null : "Need to accept terms and condition"),
+      // confirmPassword: (value, values) =>
+      //   value !== values.password ? "Password didnot match" : null,
     },
   });
 
-  async function handelCreateUser() {
+  async function handelConfirmEmail() {
     const userData = {
-      name: form.getValues().name,
+      //name: form.getValues().name,
       email: form.getValues().email,
-      password: form.getValues().password,
+      // password: form.getValues().password,
     };
     try {
       setIsloading(true);
-      await api.post("/create-user", userData);
-      navigate("/login");
-      toast.success("Signup Sucessfully");
+      await api.post("/auth/get-verify", userData);
+      toast.success("Confirmation email sent");
     } catch (e) {
       if (e.response?.data.error) {
         toast.error(e.response.data.error);
@@ -81,38 +80,13 @@ export default function SignupPage() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <form onSubmit={form.onSubmit(handelCreateUser)}>
-          <TextInput
-            label="Name"
-            placeholder="Jhon Doe"
-            mb="md"
-            key={form.key("name")}
-            {...form.getInputProps("name")}
-          />
-
+        <form onSubmit={form.onSubmit(handelConfirmEmail)}>
           <TextInput
             label="Email"
             placeholder="you@example.com"
             key={form.key("email")}
             {...form.getInputProps("email")}
           />
-
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            mt="md"
-            key={form.key("password")}
-            {...form.getInputProps("password")}
-          />
-
-          <PasswordInput
-            label="Confirm password"
-            placeholder="Your password"
-            mt="md"
-            key={form.key("confirmPassword")}
-            {...form.getInputProps("confirmPassword")}
-          />
-
           <Group justify="space-between" mt="lg">
             <Checkbox
               label="I agree to the terms and condition"
@@ -121,7 +95,7 @@ export default function SignupPage() {
             />
           </Group>
           <Button fullWidth mt="xl" type="submit" loading={loading}>
-            Sign in
+            Confirm Email
           </Button>
         </form>
       </Paper>

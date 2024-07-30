@@ -1,4 +1,4 @@
-import { AppShell, Burger, Button, Flex, Paper } from "@mantine/core";
+import { AppShell, Burger, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import {
@@ -8,9 +8,9 @@ import {
   FaLongArrowAltUp,
   FaCode,
 } from "react-icons/fa";
+import { SiGoogleads } from "react-icons/si";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
-import { MdAttachMoney } from "react-icons/md";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
@@ -25,7 +25,7 @@ export default function Dashboard() {
     { text: "Prompt", path: "prompt", icon: <FaLongArrowAltUp /> },
     { text: "Feed Knowledge", path: "knowledge", icon: <FaAddressBook /> },
     { text: "Statistics", path: "stats", icon: <IoStatsChartSharp /> },
-    { text: "Pricing", path: "pricing", icon: <MdAttachMoney /> },
+    { text: "User Leads", path: "leads", icon: <SiGoogleads /> },
     { text: "Script", path: "script", icon: <FaCode /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];

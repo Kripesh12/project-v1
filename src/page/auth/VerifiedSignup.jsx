@@ -5,38 +5,42 @@ import {
   Container,
   Button,
   Anchor,
+  TextInput,
 } from "@mantine/core";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import api from "../../api";
 import { toast } from "react-toastify";
-import classes from "./PasswordReset.module.css";
 
-export default function PasswordReset() {
+export default function VerifiedSignup() {
   const { token } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const form = useForm({
     initialValues: {
-      newPassword: "",
+      name: "",
+      password: "",
       confirmPassword: "",
     },
     validate: {
-      newPassword: (value) =>
+      name: (value) =>
+        value.length < 2 ? "Name must have at least two letters" : null,
+      password: (value) =>
         value.length < 6 ? "Password must be at least 6 characters long" : null,
       confirmPassword: (value, values) =>
-        value !== values.newPassword ? "Passwords do not match" : null,
+        value !== values.password ? "Passwords do not match" : null,
     },
   });
 
-  async function handleSubmit(values) {
+  async function handleSubmit() {
     try {
       setLoading(true);
       await api.post(
-        `/auth/reset-password`,
+        `/auth/register/?role=user`,
         {
-          password: values.newPassword,
+          name: form.getValues().name,
+          password: form.getValues().password,
         },
         {
           headers: {
@@ -44,10 +48,11 @@ export default function PasswordReset() {
           },
         }
       );
-      toast.success("Password Reset Successfully");
+      toast.success("User created successfully");
       navigate("/login");
     } catch (e) {
       toast.error(e.message);
+      console.log(e);
     } finally {
       setLoading(false);
     }
@@ -55,30 +60,34 @@ export default function PasswordReset() {
 
   return (
     <Container size={420} my={40}>
-      <Title ta="center" className={classes.title}>
-        Password Reset
-      </Title>
-
+      <Title ta="center">Signup</Title>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
+          <TextInput
+            label="Name"
+            placeholder="Name"
+            {...form.getInputProps("name")}
+          />
           <PasswordInput
-            label="New Password"
+            label="Password"
             placeholder="Password"
-            {...form.getInputProps("newPassword")}
+            mt="md"
+            {...form.getInputProps("password")}
           />
           <PasswordInput
             label="Reenter Password"
-            placeholder="Reenter password"
+            placeholder="Reenter Password"
             mt="md"
             {...form.getInputProps("confirmPassword")}
           />
           <Button fullWidth mt="xl" type="submit" loading={loading}>
-            Reset Password
+            Signup
           </Button>
           <Anchor
             size="sm"
             component="button"
             onClick={() => navigate("/login")}
+            mt="lg"
           >
             Go back to login
           </Anchor>

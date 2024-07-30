@@ -3,36 +3,33 @@ import router from "./Routes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createContext, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-//Creating a Client
-const queryClient = new QueryClient();
 
 export const UserContext = createContext();
+
 function App() {
+  //Token management state
   const [token, setToken] = useState(
     window.localStorage.getItem("token") || ""
   );
-  const [count, setCount] = useState(0);
+
+  const [id, setId] = useState(window.localStorage.getItem("id") || "");
 
   function UpdateToken(tkn) {
     window.localStorage.setItem("token", tkn);
     setToken(tkn);
   }
 
-  function updateCount(count) {
-    setCount(count);
+  function UpdateId(id) {
+    window.localStorage.setItem("token", tkn);
+    setId(id);
   }
+
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <UserContext.Provider
-          value={{ token, UpdateToken, count, updateCount }}
-        >
-          <ToastContainer />
-          <RouterProvider router={router} />
-        </UserContext.Provider>
-      </QueryClientProvider>
+      <UserContext.Provider value={{ token, UpdateToken }}>
+        <ToastContainer />
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </>
   );
 }

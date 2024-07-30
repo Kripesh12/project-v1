@@ -5,6 +5,7 @@ import Pricing from "../page/Pricing";
 import Prompt from "../page/Prompt";
 import Script from "../page/Script";
 import Statistics from "../page/Statistics";
+import UserLeads from "../page/UserLeads";
 
 const dashboardRoute = {
   path: "/dashboard",
@@ -28,12 +29,12 @@ const dashboardRoute = {
       element: <Statistics />,
     },
     {
-      path: "pricing",
-      element: <Pricing />,
-    },
-    {
       path: "script",
       element: <Script />,
+    },
+    {
+      path: "leads",
+      element: <UserLeads />,
     },
   ],
 };

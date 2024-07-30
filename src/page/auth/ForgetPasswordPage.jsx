@@ -21,13 +21,16 @@ import { toast } from "react-toastify";
 export default function ForgetPasswordPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   async function handleSubmit() {
     try {
-      await api.post("/forgot-password", { email: email });
+      setLoading(true);
+      await api.post("/auth/forgot-password", { email: email });
       toast.success("Reset email send");
     } catch (e) {
       toast.error(e.message);
+    } finally {
+      setLoading(false);
     }
   }
   return (
@@ -58,7 +61,11 @@ export default function ForgetPasswordPage() {
               </Box>
             </Center>
           </Anchor>
-          <Button className={classes.control} onClick={handleSubmit}>
+          <Button
+            className={classes.control}
+            onClick={handleSubmit}
+            loading={loading}
+          >
             Reset password
           </Button>
         </Group>

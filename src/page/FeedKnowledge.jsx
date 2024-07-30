@@ -10,22 +10,25 @@ import {
   LoadingOverlay,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import api from "../api";
 import { toast } from "react-toastify";
+import { UserContext } from "../App";
 
 function FeedKnowledge() {
+  const user = useContext(UserContext);
+  const { token } = user;
   const [opened, { open, close }] = useDisclosure(false);
   const [knowledge, setKnowledge] = useState();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     async function fetchParagraph() {
       setLoading(true);
+      const userId = localStorage.getItem("userId");
+      console.log(localStorage.getItem("userId"));
       try {
-        const res = await api.post("/get-paragraph", {
-          email: localStorage.getItem("email"),
-        });
+        const res = await api.get(`/knowledge/${userId}`);
         setKnowledge(res.data.paragraph);
       } catch (e) {
         toast.error(e.message);
@@ -46,15 +49,24 @@ function FeedKnowledge() {
     }
     setLoading(true);
     try {
-      await api.post("/create-paragraph", {
-        email: localStorage.getItem("email"),
-        newParagraph: knowledge,
-      });
+      await api.post(
+        "/knowledge/create",
+        {
+          userId: localStorage.getItem("userId"),
+          paragraph: knowledge,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast.success("Paragraph added");
     } catch (e) {
       toast.error(e.message);
     } finally {
       setLoading(false);
+      console.log(knowledge);
     }
   }
 
@@ -64,10 +76,18 @@ function FeedKnowledge() {
     }
     setLoading(true);
     try {
-      await api.post("/create-paragraph", {
-        email: localStorage.getItem("email"),
-        newParagraph: "",
-      });
+      await api.post(
+        "/knowledge/create",
+        {
+          userId: localStorage.getItem("userId"),
+          paragraph: "",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setKnowledge("");
       toast.success("Paragraph Removed");
     } catch (e) {

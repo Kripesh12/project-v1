@@ -8,18 +8,43 @@ import {
   Center,
   LoadingOverlay,
 } from "@mantine/core";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
 import { UserContext } from "../App";
 
 function Prompt() {
   const user = useContext(UserContext);
-  const { token, updateCount } = user;
+  const { token } = user;
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //Useeffect to initialize userdata and store it in local storage
+  useEffect(() => {
+    async function getUserDetail() {
+      try {
+        const { data } = await api.post(
+          "/auth/get-info",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("avatar", data.avatar);
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
+    getUserDetail();
+  }, []);
+
+  //Handele Submit
   async function handleSubmit() {
     if (prompt.length < 5) {
       toast.error("Search must contain atleast 5 characters");
@@ -28,9 +53,9 @@ function Prompt() {
     try {
       setLoading(true);
       const data = await api.post(
-        "/ask-question",
+        "/knowledge/ask-question",
         {
-          id: localStorage.getItem("userId"),
+          userId: localStorage.getItem("userId"),
           prompt: prompt,
         },
         {
@@ -39,8 +64,7 @@ function Prompt() {
           },
         }
       );
-      setResponse(data.data.formattedText);
-      updateCount(data.data.count);
+      setResponse(data.data.answer);
     } catch (e) {
       toast.error(e.message);
     } finally {
