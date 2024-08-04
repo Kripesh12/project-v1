@@ -1,6 +1,7 @@
 import Dashboard from "../layouts/Dashboard";
 import LogoutPage from "../page/auth/LogoutPage";
 import FeedKnowledge from "../page/FeedKnowledge";
+import Key from "../page/Key";
 import Pricing from "../page/Pricing";
 import Prompt from "../page/Prompt";
 import Script from "../page/Script";
@@ -35,6 +36,10 @@ const dashboardRoute = {
     {
       path: "leads",
       element: <UserLeads />,
+    },
+    {
+      path: "key",
+      element: <Key />,
     },
   ],
 };

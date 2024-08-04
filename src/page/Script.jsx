@@ -1,30 +1,56 @@
-import { Box, Button, Center, Paper, Text, Title } from "@mantine/core";
-import { CopyButton } from "@mantine/core";
-import { toast } from "react-toastify";
+import { Box, Center, Title } from "@mantine/core";
+import AvatarInput from "../components/AvatarInput";
+import AvatarImageContainer from "../components/AvatarImageContainer";
+import api from "../api";
+import { useQuery } from "@tanstack/react-query";
+import Key from "./Key";
 
 export default function Script() {
   const text = `<script src=""></script>`;
 
+  const { isLoading, data, error, status } = useQuery({
+    queryKey: ["info"],
+    queryFn: getAvatar,
+  });
+
+  async function getAvatar() {
+    const data = await api.post(
+      "/auth/get-info",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return data.data.avatar;
+  }
+  console.log(data);
+  if (isLoading) {
+    return (
+      <>
+        <br />
+        <br />
+        Loading...
+      </>
+    );
+  }
   return (
-    <Center>
-      <Box mt={50} w={720}>
-        <Title size={20} c={"dark"}>
-          {localStorage.getItem("userId")
-            ? "Copy this code and paste it at the end of your HTML code"
-            : "No knowledge exists. Please create some knowledge"}
-        </Title>
-        <Paper withBorder={true} p={20} shadow="md" mt={20} mb={20}>
-          <Text>{text}</Text>
-        </Paper>
-        <Button
-          onClick={async () => {
-            await navigator.clipboard.writeText("This is a simple text");
-            toast.success("Copied to clipboard");
-          }}
-        >
-          Copy Script
-        </Button>
-      </Box>
-    </Center>
+    <>
+      <Center>
+        <Box mt={50} w={820}>
+          <Title size={20} c={"dark"}>
+            Upload avatar for your chatbot
+          </Title>{" "}
+          {data ? (
+            <AvatarImageContainer image={data} status={status} />
+          ) : (
+            <AvatarInput />
+          )}
+        </Box>
+      </Center>
+
+      <Key />
+    </>
   );
 }

@@ -11,10 +11,12 @@ import {
 import { SiGoogleads } from "react-icons/si";
 import { IoStatsChartSharp } from "react-icons/io5";
 import { IoLogOutOutline } from "react-icons/io5";
+import { FaKey } from "react-icons/fa6";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
 import { UserContext } from "../App";
 import NavbarDashboard from "../components/NavbarDashboard";
+
 export default function Dashboard() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
@@ -27,6 +29,7 @@ export default function Dashboard() {
     { text: "Statistics", path: "stats", icon: <IoStatsChartSharp /> },
     { text: "User Leads", path: "leads", icon: <SiGoogleads /> },
     { text: "Script", path: "script", icon: <FaCode /> },
+    { text: "API Key", path: "key", icon: <FaKey /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   // if (token.length == 0) {

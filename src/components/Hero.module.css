@@ -1,7 +1,6 @@
 .wrapper {
   position: relative;
   box-sizing: border-box;
-  background-image: url("/public/Untitled\ design\(2\).png");
   background-repeat: no-repeat;
   background-size: cover;
 }

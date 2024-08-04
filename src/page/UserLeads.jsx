@@ -1,7 +1,18 @@
-import { Title, Box, Card, Center, Table, Pagination } from "@mantine/core";
-import { LineChart } from "@mantine/charts";
-import { useState } from "react";
+import {
+  Title,
+  Box,
+  Card,
+  Center,
+  Table,
+  Pagination,
+  camelToKebabCase,
+} from "@mantine/core";
+import { BarChart, LineChart } from "@mantine/charts";
+import { useEffect, useState } from "react";
+import api from "../api";
 
+const PAGE_SIZE = 6;
+//For Chart
 const data = [
   { date: "Jan", leads: 200 },
   { date: "Feb", leads: 100 },
@@ -17,45 +28,43 @@ const data = [
   { date: "Dec", leads: 1200 },
 ];
 
-const leadsData = [
-  { name: "John Doe", email: "john.doe@example.com" },
-  { name: "Jane Smith", email: "jane.smith@example.com" },
-  { name: "Michael Johnson", email: "michael.johnson@example.com" },
-  { name: "Emily Davis", email: "emily.davis@example.com" },
-  { name: "Robert Brown", email: "robert.brown@example.com" },
-  { name: "Jessica Taylor", email: "jessica.taylor@example.com" },
-  { name: "Daniel Wilson", email: "daniel.wilson@example.com" },
-  { name: "Sarah Moore", email: "sarah.moore@example.com" },
-  { name: "David Lee", email: "david.lee@example.com" },
-  { name: "Laura White", email: "laura.white@example.com" },
-  { name: "Christopher Harris", email: "christopher.harris@example.com" },
-  { name: "Amanda Martin", email: "amanda.martin@example.com" },
-  { name: "James Thompson", email: "james.thompson@example.com" },
-  { name: "Karen Clark", email: "karen.clark@example.com" },
-];
-
-const PAGE_SIZE = 6;
-
-function Chart() {
-  return (
-    <LineChart
-      h={300}
-      data={data}
-      series={[{ name: "leads", label: "Avg. Leads" }]}
-      dataKey="date"
-      type="solid"
-      strokeWidth={5}
-      curveType="natural"
-    />
-  );
-}
-
-function LeadTable() {
+export default function UserLeads() {
+  const [userLeads, setUserLeads] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const startIndex = (activePage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
+  const paginatedData = userLeads.slice(startIndex, endIndex);
 
-  const paginatedData = leadsData.slice(startIndex, endIndex);
+  useEffect(() => {
+    async function getUserLeads() {
+      const userId = localStorage.getItem("userId");
+      try {
+        const data = await api.get(`/enquiry/${userId}`);
+        setUserLeads(data.data);
+        console.log(data);
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
+    getUserLeads();
+  }, []);
+
+  function aggregatedData(data) {
+    const leadsMap = new Map();
+    data.forEach(({ month }) => {
+      if (leadsMap.has(month)) {
+        const entry = leadsMap.get(month);
+        entry.leads += 1;
+      } else {
+        leadsMap.set(month, { month, leads: 1 });
+      }
+    });
+    const aggregadtedData = Array.from(leadsMap.values());
+    return aggregadtedData;
+  }
+
+  const newData = aggregatedData(userLeads);
+  console.log(newData);
 
   const rows = paginatedData.map((element) => (
     <Table.Tr key={element.name}>
@@ -65,38 +74,40 @@ function LeadTable() {
   ));
 
   return (
-    <>
-      <Table>
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>User Name</Table.Th>
-            <Table.Th>Email</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
-        <Pagination
-          value={activePage}
-          total={Math.ceil(leadsData.length / PAGE_SIZE)}
-          onChange={setActivePage}
-          mt={30}
-        />
-      </Table>
-    </>
-  );
-}
-
-export default function UserLeads() {
-  return (
     <Center>
       <Box w={720} mt={50} p={20}>
         <Title order={3} mb={20} c={"#383838"}>
           Leads in one year
         </Title>
         <Card withBorder radius="md" p="xl" shadow="sm">
-          <Chart />
+          <BarChart
+            h={300}
+            w={200}
+            data={aggregatedData(userLeads)}
+            dataKey="month"
+            series={[{ name: "leads", color: "blue.6" }]}
+            tickLine="y"
+          />
         </Card>
-        <Card withBorder radius="md" p="xl" shadow="sm" mt={40}>
-          <LeadTable />
+        <Title order={3} mt={40} c={"#383838"}>
+          User Leads
+        </Title>
+        <Card withBorder radius="md" p="xl" shadow="sm" mt={20}>
+          <Table>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>User Name</Table.Th>
+                <Table.Th>Email</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+          <Pagination
+            value={activePage}
+            total={Math.ceil(userLeads.length / PAGE_SIZE)}
+            onChange={setActivePage}
+            mt={30}
+          />
         </Card>
       </Box>
     </Center>
