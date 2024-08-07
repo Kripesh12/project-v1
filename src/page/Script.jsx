@@ -1,56 +1,82 @@
-import { Box, Center, Title } from "@mantine/core";
-import AvatarInput from "../components/AvatarInput";
-import AvatarImageContainer from "../components/AvatarImageContainer";
+import { Box, Center, Paper, Text, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
 import api from "../api";
-import { useQuery } from "@tanstack/react-query";
-import Key from "./Key";
+import { Link } from "react-router-dom";
 
-export default function Script() {
-  const text = `<script src=""></script>`;
+function Script() {
+  const [apiKey, setApiKey] = useState("");
+  const [domain, setDomain] = useState("");
 
-  const { isLoading, data, error, status } = useQuery({
-    queryKey: ["info"],
-    queryFn: getAvatar,
-  });
+  async function getChatbotDetails() {
+    try {
+      const res = await api.post(
+        "/api/get-info",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setDomain(res.data.domain);
+      console.log(res);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 
-  async function getAvatar() {
-    const data = await api.post(
-      "/auth/get-info",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+  //Fetch the api key on mount
+  useEffect(() => {
+    async function getApi() {
+      try {
+        const res = await api.post(
+          "/api/get-info",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setApiKey(res.data.api_key);
+      } catch (e) {
+        console.log(e.message);
       }
-    );
-    return data.data.avatar;
-  }
-  console.log(data);
-  if (isLoading) {
-    return (
-      <>
-        <br />
-        <br />
-        Loading...
-      </>
-    );
-  }
-  return (
-    <>
-      <Center>
-        <Box mt={50} w={820}>
-          <Title size={20} c={"dark"}>
-            Upload avatar for your chatbot
-          </Title>{" "}
-          {data ? (
-            <AvatarImageContainer image={data} status={status} />
-          ) : (
-            <AvatarInput />
-          )}
-        </Box>
-      </Center>
+    }
+    getApi();
+    getChatbotDetails();
+  }, []);
 
-      <Key />
-    </>
+  return (
+    <Center>
+      <Box mt={100} w={820}>
+        <Title fz={18} c={"#222222"}>
+          Copy this script tag and paste it in your HTML
+        </Title>
+
+        <Paper shadow="xl" p={20} mt={10}>
+          <Text fz={18}>
+            {apiKey
+              ? ` <script src="/src/main.jsx?key=${apiKey}"></script>`
+              : "API key not defined : Generate API key by filling chatbot details"}
+          </Text>
+        </Paper>
+        <Text mt={20}>
+          {domain ? (
+            <Text>
+              * This script tag only works on {domain}.
+              <Link style={{ color: "blue" }} to="/dashboard/details">
+                {" "}
+                Edit your domain here
+              </Link>
+            </Text>
+          ) : (
+            ""
+          )}
+        </Text>
+      </Box>
+    </Center>
   );
 }
+
+export default Script;

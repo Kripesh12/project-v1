@@ -9,8 +9,12 @@ import {
   FaCode,
 } from "react-icons/fa";
 import { SiGoogleads } from "react-icons/si";
-import { IoStatsChartSharp } from "react-icons/io5";
-import { IoLogOutOutline } from "react-icons/io5";
+import {
+  IoStatsChartSharp,
+  IoLogOutOutline,
+  IoInformationCircleSharp,
+} from "react-icons/io5";
+
 import { FaKey } from "react-icons/fa6";
 import classes from "./Dashboard.module.css";
 import { useContext } from "react";
@@ -28,8 +32,12 @@ export default function Dashboard() {
     { text: "Feed Knowledge", path: "knowledge", icon: <FaAddressBook /> },
     { text: "Statistics", path: "stats", icon: <IoStatsChartSharp /> },
     { text: "User Leads", path: "leads", icon: <SiGoogleads /> },
-    { text: "Script", path: "script", icon: <FaCode /> },
-    { text: "API Key", path: "key", icon: <FaKey /> },
+    {
+      text: "Chatbot Details",
+      path: "details",
+      icon: <IoInformationCircleSharp />,
+    },
+    { text: "Generate Script", path: "script", icon: <FaCode /> },
     { text: "Logout", path: "logout", icon: <IoLogOutOutline /> },
   ];
   // if (token.length == 0) {

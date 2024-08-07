@@ -1,10 +1,9 @@
 import Dashboard from "../layouts/Dashboard";
 import LogoutPage from "../page/auth/LogoutPage";
+import ChatbotDetails from "../page/ChatbotDetails";
 import FeedKnowledge from "../page/FeedKnowledge";
-import Key from "../page/Key";
-import Pricing from "../page/Pricing";
+import Key from "../page/Script";
 import Prompt from "../page/Prompt";
-import Script from "../page/Script";
 import Statistics from "../page/Statistics";
 import UserLeads from "../page/UserLeads";
 
@@ -30,15 +29,15 @@ const dashboardRoute = {
       element: <Statistics />,
     },
     {
-      path: "script",
-      element: <Script />,
+      path: "details",
+      element: <ChatbotDetails />,
     },
     {
       path: "leads",
       element: <UserLeads />,
     },
     {
-      path: "key",
+      path: "script",
       element: <Key />,
     },
   ],

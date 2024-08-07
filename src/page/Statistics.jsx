@@ -32,6 +32,9 @@ export default function Statistics() {
   }, []);
 
   function aggregatedData(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      return [{ country: "No data available" }];
+    }
     const countryMap = new Map();
     data.forEach(({ id, country, flag }) => {
       if (countryMap.has(country)) {

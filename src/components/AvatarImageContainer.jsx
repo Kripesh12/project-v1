@@ -1,4 +1,4 @@
-import { Box, Paper, Image, Button, Modal } from "@mantine/core";
+import { Box, Paper, Image, Button, Modal, Avatar, Flex } from "@mantine/core";
 import AvatarInput from "./AvatarInput";
 import { useDisclosure } from "@mantine/hooks";
 function AvatarImageContainer({ image, status }) {
@@ -10,15 +10,20 @@ function AvatarImageContainer({ image, status }) {
 
   return (
     <Box>
-      <Paper w={200} mt={30}>
-        <Image src={`http://${image}` || "https://via.placeholder.com/150"} />
-      </Paper>
-      <Modal opened={opened} onClose={close} title="Change Avatar">
-        <AvatarInput onUploadSuccess={handleUploadSuccess} />
-      </Modal>
-      <Button mt={10} onClick={open}>
-        Change Avatar
-      </Button>
+      <Flex direction={"column"} justify={"center"} align={"center"} gap={20}>
+        <Avatar
+          src={`http://${image}` || "https://via.placeholder.com/150"}
+          size={200}
+          autoContrast={true}
+        />
+
+        <Modal opened={opened} onClose={close} title="Change Avatar">
+          <AvatarInput onUploadSuccess={handleUploadSuccess} />
+        </Modal>
+        <Button mt={10} onClick={open}>
+          Change Avatar
+        </Button>
+      </Flex>
     </Box>
   );
 }

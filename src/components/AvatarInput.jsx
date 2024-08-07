@@ -10,7 +10,7 @@ export default function AvatarInput({ onUploadSuccess, ...props }) {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
 
-  const { isPending, mutate, isSuccess } = useMutation({
+  const { mutate, isSuccess } = useMutation({
     mutationFn: handleSubmit,
     onSuccess: () => {
       queryClient.invalidateQueries({

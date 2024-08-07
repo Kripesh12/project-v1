@@ -33,8 +33,14 @@ export default function UserLeads() {
   const [activePage, setActivePage] = useState(1);
   const startIndex = (activePage - 1) * PAGE_SIZE;
   const endIndex = startIndex + PAGE_SIZE;
-  const paginatedData = userLeads.slice(startIndex, endIndex);
 
+  function getPaginatedData(userLeads, startIndex, endIndex) {
+    if (!Array.isArray(userLeads)) {
+      return [];
+    }
+    return userLeads.slice(startIndex, endIndex);
+  }
+  const paginatedData = getPaginatedData(userLeads, startIndex, endIndex);
   useEffect(() => {
     async function getUserLeads() {
       const userId = localStorage.getItem("userId");
@@ -50,6 +56,9 @@ export default function UserLeads() {
   }, []);
 
   function aggregatedData(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      return [];
+    }
     const leadsMap = new Map();
     data.forEach(({ month }) => {
       if (leadsMap.has(month)) {
