@@ -1,59 +1,50 @@
-import cx from "clsx";
-import { Title, Text, Container, Button, Group, Flex } from "@mantine/core";
+import {
+  Title,
+  Text,
+  Button,
+  Container,
+  Box,
+  Flex,
+  Overlay,
+} from "@mantine/core";
 import classes from "./Hero.module.css";
-import { useNavigate } from "react-router-dom";
-import RobotAnimation from "../animation/RobotAnimation";
+
 export default function Hero() {
-  const navigator = useNavigate();
   return (
-    <div className={classes.wrapper}>
-      <Container size={1200} className={classes.inner}>
-        <Flex align={"center"} justify={"space-between"} gap={80}>
-          <Group w={"70%"}>
-            <h1 className={classes.title}>
-              A{" "}
-              <Text
-                component="span"
-                variant="gradient"
-                gradient={{ from: "blue", to: "cyan" }}
-                inherit
-              >
-                fully featured
-              </Text>{" "}
-              AI chatbot for your business
-            </h1>
+    <Container className={classes.wrapper} size={"100%"} id="Home">
+      <Overlay
+        gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)"
+        opacity={1}
+        zIndex={0}
+      />
+      <Box className={classes.inner} mt={-100}>
+        <Title
+          className={classes.title}
+          fz={"52px"}
+          c={"#e9e9e9"}
+          lh={1.2}
+          w={820}
+        >
+          Your Intelligent {""}
+          <span className={classes.highlight}>AI-Powered Customer</span>{" "}
+          Interaction Solution
+        </Title>
 
-            <Text className={classes.description} c={"dimmed"} mt={20} fz={20}>
-              Build fully functional accessible web applications with ease –
-              Mantine includes more than 100 customizable components and hooks
-              to cover you in any situation
-            </Text>
-          </Group>
-          <Group>
-            <RobotAnimation />
-          </Group>
-        </Flex>
-        <Group className={classes.controls}>
-          <Button
-            size="xl"
-            className={classes.control}
-            variant="gradient"
-            gradient={{ from: "blue", to: "cyan" }}
-          >
-            Get started
-          </Button>
+        <Container p={0} size={600} mt={28}>
+          <Text size="lg" className={classes.description} c={"#ffff"}>
+            In today’s fast-paced digital world, customer experience is
+            paramount. MasterResponse Chatbot is designed to elevate your
+            customer support by providing instant, accurate, and reliable
+            responses.
+          </Text>
+        </Container>
 
-          <Button
-            component="a"
-            href="https://github.com/mantinedev/mantine"
-            size="xl"
-            variant="default"
-            className={classes.control}
-          >
-            GitHub
+        <Box className={classes.controls} mt={50}>
+          <Button className={classes.control} size="xl">
+            Free signup
           </Button>
-        </Group>
-      </Container>
-    </div>
+        </Box>
+      </Box>
+    </Container>
   );
 }

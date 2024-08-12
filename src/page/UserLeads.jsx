@@ -73,7 +73,6 @@ export default function UserLeads() {
   }
 
   const newData = aggregatedData(userLeads);
-  console.log(newData);
 
   const rows = paginatedData.map((element) => (
     <Table.Tr key={element.name}>

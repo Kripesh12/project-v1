@@ -8,7 +8,7 @@ const placeholder =
 export function Faq() {
   return (
     <div className={classes.wrapper} id="faqs">
-      <Container size="sm">
+      <Container size={1200}>
         <Title ta="center" className={classes.title} pb={50}>
           Frequently Asked Questions
         </Title>

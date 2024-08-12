@@ -1,90 +1,47 @@
-import { Menu, Group, Center, Burger, Container } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown } from "@tabler/icons-react";
-import { MantineLogo } from "@mantinex/mantine-logo";
-import classes from "./Navbar.module.css";
+import React from "react";
+import {
+  Group,
+  Text,
+  Button,
+  Container,
+  Box,
+  Flex,
+  Anchor,
+} from "@mantine/core";
 
-const links = [
-  { link: "/about", label: "Features" },
-  {
-    link: "#1",
-    label: "Learn",
-    links: [
-      { link: "/docs", label: "Documentation" },
-      { link: "/resources", label: "Resources" },
-      { link: "/community", label: "Community" },
-      { link: "/blog", label: "Blog" },
-    ],
-  },
-  { link: "/about", label: "About" },
-  { link: "/pricing", label: "Pricing" },
-  {
-    link: "#2",
-    label: "Support",
-    links: [
-      { link: "/faq", label: "FAQ" },
-      { link: "/demo", label: "Book a demo" },
-      { link: "/forums", label: "Forums" },
-    ],
-  },
-];
-
-export default function Navbar() {
-  const [opened, { toggle }] = useDisclosure(false);
-
-  const items = links.map((link) => {
-    const menuItems = link.links?.map((item) => (
-      <Menu.Item key={item.link}>{item.label}</Menu.Item>
-    ));
-
-    if (menuItems) {
-      return (
-        <Menu
-          key={link.label}
-          trigger="hover"
-          transitionProps={{ exitDuration: 0 }}
-          withinPortal
-        >
-          <Menu.Target>
-            <a
-              href={link.link}
-              className={classes.link}
-              onClick={(event) => event.preventDefault()}
-            >
-              <Center>
-                <span className={classes.linkLabel}>{link.label}</span>
-                <IconChevronDown size="0.9rem" stroke={1.5} />
-              </Center>
-            </a>
-          </Menu.Target>
-          <Menu.Dropdown>{menuItems}</Menu.Dropdown>
-        </Menu>
-      );
-    }
-
-    return (
-      <a
-        key={link.label}
-        href={link.link}
-        className={classes.link}
-        onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </a>
-    );
-  });
-
+export default function NavbarSection() {
   return (
-    <header className={classes.header}>
-      <Container size={1200}>
-        <div className={classes.inner}>
-          <MantineLogo size={28} />
-          <Group gap={10} visibleFrom="sm">
-            {items}
+    <Box height={60} px="md">
+      <Container size={1200} p={"sm"}>
+        <Group position="apart" align="center" justify="space-between">
+          <Text weight={700} size="lg">
+            Masteresponse
+          </Text>
+
+          <Group gap={35}>
+            <Anchor href="#Home" size="lg">
+              Home
+            </Anchor>
+            <Anchor href="#about" size="lg">
+              About
+            </Anchor>
+            <Anchor href="#features" size="lg">
+              Features
+            </Anchor>
+            <Anchor href="#faqs" size="lg">
+              FAQs
+            </Anchor>
+            <Anchor href="#contact" size="lg">
+              Contact
+            </Anchor>
           </Group>
-          <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-        </div>
+
+          <Group>
+            <Button variant="outline">Login</Button>
+            <Button>Sign Up</Button>
+          </Group>
+        </Group>
       </Container>
-    </header>
+    </Box>
   );
 }

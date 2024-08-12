@@ -38,6 +38,7 @@ function KnowledgeInput({ getKnowledge }) {
         }
       );
       getKnowledge();
+      form.reset();
     } catch (e) {
       console.log(e.message);
     } finally {

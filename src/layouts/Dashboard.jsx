@@ -1,6 +1,12 @@
 import { AppShell, Burger, Button, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  useNavigate,
+  useLocation,
+  useLoaderData,
+} from "react-router-dom";
 import {
   FaAddressBook,
   FaArrowLeft,
@@ -25,6 +31,7 @@ export default function Dashboard() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useContext(UserContext);
   const { token } = user;
   const navlinkList = [
@@ -66,15 +73,22 @@ export default function Dashboard() {
 
       {/* Navbar */}
       <AppShell.Navbar p="xs" bg={"blue"}>
-        <Flex direction="column" gap={10}>
-          {navlinkList.map((item, index) => {
-            return (
-              <NavLink className={classes.navlink} key={index} to={item.path}>
-                {item.icon} {item.text}
-              </NavLink>
-            );
-          })}
-        </Flex>
+        <div id="nav">
+          <Flex direction="column" gap={10}>
+            {navlinkList.map((item, index) => {
+              return (
+                <NavLink
+                  className={classes.navlink}
+                  key={index}
+                  to={item.path}
+                  // active={location.pathname === item.path}
+                >
+                  {item.icon} {item.text}
+                </NavLink>
+              );
+            })}
+          </Flex>
+        </div>
       </AppShell.Navbar>
 
       <AppShell.Main>

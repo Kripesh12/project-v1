@@ -1,6 +1,4 @@
 import {
-  Badge,
-  Group,
   Title,
   Text,
   Card,
@@ -9,27 +7,53 @@ import {
   rem,
   useMantineTheme,
 } from "@mantine/core";
-import { IconGauge, IconUser, IconCookie } from "@tabler/icons-react";
+
+import { MdFeedback, MdAnalytics } from "react-icons/md";
+import { RiRobotFill } from "react-icons/ri";
+import { BiSolidCustomize } from "react-icons/bi";
+import { FaFireAlt } from "react-icons/fa";
+import { TbReportAnalytics } from "react-icons/tb";
+
+import { FaClock } from "react-icons/fa";
+
 import classes from "./Features.module.css";
 
 const mockdata = [
   {
-    title: "Extreme performance",
+    title: "AI-Powered Conversations",
     description:
-      "This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit",
-    icon: IconGauge,
+      "Our chatbot uses advanced AI algorithms to understand and respond to customer queries efficiently, simulating natural conversations.",
+    icon: RiRobotFill,
   },
   {
-    title: "Privacy focused",
+    title: "Pre-Fed Knowledge",
     description:
-      "People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma",
-    icon: IconUser,
+      "Feed the chatbot with your product knowledge, FAQs, and more. The chatbot uses this data to deliver relevant and consistent responses.",
+    icon: MdFeedback,
   },
   {
-    title: "No third parties",
+    title: "24/7 Availability",
     description:
-      "They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves",
-    icon: IconCookie,
+      "Never miss a customer query. MasterResponse is always available, providing support round-the-clock",
+    icon: FaClock,
+  },
+  {
+    title: "Customizable & Scalable",
+    description:
+      " Tailor the chatbot to reflect your brand’s voice and scale as your business grows.",
+    icon: BiSolidCustomize,
+  },
+  {
+    title: "Real-Time Learning",
+    description:
+      "Continuously adapts to new information and customer interactions, improving its accuracy and relevance over time without requiring manual updates.",
+    icon: FaFireAlt,
+  },
+  {
+    title: "Analytics & Insights",
+    description:
+      "Gain insights into customer behavior and preferences through detailed reports and analytics.",
+    icon: MdAnalytics,
   },
 ];
 
@@ -58,20 +82,15 @@ export function Features() {
   ));
 
   return (
-    <Container size="lg" py="xl" w={"70vh"} pt={100} pb={100} id="features">
-      <Group justify="center">
-        <Badge variant="filled" size="lg">
-          Best company ever
-        </Badge>
-      </Group>
-
+    <Container size={1200} py="xl" pt={100} pb={100} id="features">
       <Title order={2} className={classes.title} ta="center" mt="sm">
-        Integrate effortlessly with any technology stack
+        Why choose Master response?
       </Title>
 
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Every once in a while, you’ll see a Golbat that’s missing some fangs.
-        This happens when hunger drives it to try biting a Steel-type Pokémon.
+        Our AI-powered chatbot interacts with your customers using a rich
+        repository of pre-fed knowledge, ensuring they get the answers they
+        need, when they need them.
       </Text>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
