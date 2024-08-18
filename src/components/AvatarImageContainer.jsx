@@ -1,4 +1,4 @@
-import { Box, Paper, Image, Button, Modal, Avatar, Flex } from "@mantine/core";
+import { Box, Button, Modal, Avatar, Flex } from "@mantine/core";
 import AvatarInput from "./AvatarInput";
 import { useDisclosure } from "@mantine/hooks";
 function AvatarImageContainer({ image, status }) {

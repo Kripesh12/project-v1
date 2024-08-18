@@ -40,11 +40,16 @@ export default function LoginPage() {
       navigate("/dashboard/prompt");
       toast.success("Login Sucessfully");
     } catch (e) {
-      if (e.response?.status == 400) {
-        toast.error("Incorrect login or password");
-        return;
+      if (e.response) {
+        // Server responded with a status other than 2xx
+        toast.error(e.response.data.message);
+      } else if (e.request) {
+        // Request was made but no response was received
+        toast.error("Network error, please try again.");
+      } else {
+        // Something else happened in setting up the request
+        toast.error("An unexpected error occurred.");
       }
-      toast.error(e.message);
     } finally {
       settLoading(false);
     }

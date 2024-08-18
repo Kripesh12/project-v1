@@ -8,8 +8,10 @@ import {
   Flex,
   Anchor,
 } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarSection() {
+  const navigate = useNavigate();
   return (
     <Box height={60} px="md">
       <Container size={1200} p={"sm"}>
@@ -37,8 +39,10 @@ export default function NavbarSection() {
           </Group>
 
           <Group>
-            <Button variant="outline">Login</Button>
-            <Button>Sign Up</Button>
+            <Button variant="outline" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+            <Button onClick={() => navigate("/signup")}>Sign Up</Button>
           </Group>
         </Group>
       </Container>

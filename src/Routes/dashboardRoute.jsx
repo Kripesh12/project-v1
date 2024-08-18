@@ -6,6 +6,7 @@ import Key from "../page/Script";
 import Prompt from "../page/Prompt";
 import Statistics from "../page/Statistics";
 import UserLeads from "../page/UserLeads";
+import UserPrompt from "../page/UserPrompt";
 
 const dashboardRoute = {
   path: "/dashboard",
@@ -39,6 +40,10 @@ const dashboardRoute = {
     {
       path: "script",
       element: <Key />,
+    },
+    {
+      path: "user-prompt",
+      element: <UserPrompt />,
     },
   ],
 };

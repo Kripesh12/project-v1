@@ -1,15 +1,9 @@
-import {
-  Title,
-  Text,
-  Button,
-  Container,
-  Box,
-  Flex,
-  Overlay,
-} from "@mantine/core";
+import { Title, Text, Button, Container, Box, Overlay } from "@mantine/core";
 import classes from "./Hero.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <Container className={classes.wrapper} size={"100%"} id="Home">
       <Overlay
@@ -40,7 +34,11 @@ export default function Hero() {
         </Container>
 
         <Box className={classes.controls} mt={50}>
-          <Button className={classes.control} size="xl">
+          <Button
+            className={classes.control}
+            size="xl"
+            onClick={() => navigate("/signup")}
+          >
             Free signup
           </Button>
         </Box>

@@ -10,9 +10,8 @@
   background-position: left;
   background-size: cover;
   background-repeat: no-repeat;
-  @media (max-width: 576px) {
-    padding-top: 80px;
-    padding-bottom: 60px;
+  @media (max-width: 768px) {
+    padding: 50px 0;
   }
 }
 .imageWrapper {
@@ -45,16 +44,13 @@
 .title {
   text-align: center;
   font-weight: 800;
-  font-size: 50px; /* Converted rem(40px) to 40px */
+  font-size: 50px;
   letter-spacing: -1px;
-  color: #000000; /* Adjusted for light mode */
-  margin-bottom: 8px; /* Assuming var(--mantine-spacing-xs) is 8px */
+  color: #000000;
+  margin-bottom: 8px;
   font-family: "Greycliff CF", sans-serif;
-
-  /* Media query for extra small screens */
   @media (max-width: 480px) {
-    /* Converted $mantine-breakpoint-xs to 480px */
-    font-size: 28px; /* Converted rem(28px) to 28px */
+    font-size: 28px;
     text-align: left;
   }
 }
@@ -75,30 +71,24 @@
 }
 
 .controls {
-  margin-top: 24px; /* Assuming var(--mantine-spacing-lg) is 24px */
+  margin-top: 24px;
   display: flex;
   justify-content: center;
-
-  /* Media query for extra small screens */
   @media (max-width: 480px) {
-    /* Converted $mantine-breakpoint-xs to 480px */
     flex-direction: column;
   }
 }
 
 .control {
   &:not(:first-of-type) {
-    margin-left: 16px; /* Assuming var(--mantine-spacing-md) is 16px */
+    margin-left: 16px;
   }
-
-  /* Media query for extra small screens */
   @media (max-width: 480px) {
-    /* Converted $mantine-breakpoint-xs to 480px */
-    height: 42px; /* Converted rem(42px) to 42px */
-    font-size: 16px; /* Assuming var(--mantine-font-size-md) is 16px */
+    height: 42px;
+    font-size: 16px;
 
     &:not(:first-of-type) {
-      margin-top: 16px; /* Assuming var(--mantine-spacing-md) is 16px */
+      margin-top: 16px;
       margin-left: 0;
     }
   }

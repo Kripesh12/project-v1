@@ -22,46 +22,25 @@ export default function SignupPage() {
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
-      // name: "",
       email: "",
-      // password: "",
-      // tos: false,
-      // confirmPassword: "",
     },
     validate: {
-      // name: (value) => (value.length < 2 ? "Name must have two letters" : null),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      // password: (value) =>
-      //   value.length < 6
-      //     ? "Password must be of atleast 6 characters"
-      //     : /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
-      //         value
-      //       )
-      //     ? null
-      //     : "Password must have atleast one uppercase, one lowercase, one letter and one special symbol",
-      // tos: (value) => (value ? null : "Need to accept terms and condition"),
-      // confirmPassword: (value, values) =>
-      //   value !== values.password ? "Password didnot match" : null,
+      tos: (value) => (value ? null : "Need to accept terms and condition"),
     },
   });
 
   async function handelConfirmEmail() {
     const userData = {
-      //name: form.getValues().name,
       email: form.getValues().email,
-      // password: form.getValues().password,
     };
     try {
       setIsloading(true);
       await api.post("/auth/get-verify", userData);
       toast.success("Confirmation email sent");
+      form.reset();
     } catch (e) {
-      if (e.response?.data.error) {
-        toast.error(e.response.data.error);
-        return;
-      }
-      toast.error("Innternal server error");
-      throw e;
+      toast.error(e.response.data.message);
     } finally {
       setIsloading(false);
     }

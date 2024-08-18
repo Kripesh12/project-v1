@@ -1,47 +1,33 @@
-import { Box, Center, Title } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { Box, Center, Text, Title } from "@mantine/core";
+import { useState } from "react";
 import KnowledgeContainer from "../components/KnowledgeContainer";
 import KnowledgeInput from "../components/KnowledgeInput";
 import api from "../api";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
 function FeedKnowledge() {
-  const [knowledgeArray, setKnowledgeArray] = useState([]);
-
-  //Function to handel delete
-  async function handelDeleteKnowledge(id) {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-    try {
-      await api.delete(`/knowledge/${userId}/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success("Knowledge deleted");
-    } catch (e) {
-      console.log(e.message);
-    }
-    setKnowledgeArray(
-      knowledgeArray.filter((knowledge) => knowledge.id !== id)
-    );
-  }
-
-  //Function to get knowledge array
   async function getKnowledge() {
     const userId = localStorage.getItem("userId");
     try {
       const res = await api.get(`/knowledge/${userId}`);
-      setKnowledgeArray(res.data);
-    } catch (e) {
-      console.log(e.message);
+      return res.data;
+    } catch (error) {
+      toast.error(`Error fetching knowledge: ${error.message}`);
     }
   }
 
-  //Load the knowledge on mount
-  useEffect(() => {
-    getKnowledge();
-  }, []);
+  const { isPending, data, isError, error } = useQuery({
+    queryKey: ["knowledge"],
+    queryFn: getKnowledge,
+  });
+
+  if (isPending) {
+    return <Text>Loading...</Text>;
+  }
+  if (isError) {
+    return <Text>{error.message}</Text>;
+  }
 
   return (
     <>
@@ -51,11 +37,7 @@ function FeedKnowledge() {
             Enter your paragraph
           </Title>
           <KnowledgeInput getKnowledge={getKnowledge} />
-          <KnowledgeContainer
-            knowledgeArray={knowledgeArray}
-            getKnowledge={getKnowledge}
-            handelDeleteKnowledge={handelDeleteKnowledge}
-          />
+          <KnowledgeContainer data={data} />
         </Box>
       </Center>
     </>

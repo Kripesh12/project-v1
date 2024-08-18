@@ -13,14 +13,14 @@ import { useState } from "react";
 import { MdEditSquare, MdDelete } from "react-icons/md";
 import api from "../api";
 import { toast } from "react-toastify";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
-  //For Update Model
-  const [opended, setOpened] = useState(false);
-  //For Delete Model
+function Knowledge({ data }) {
+  const queryClient = useQueryClient();
+  const [updateModelOpened, setUpdateModelOpened] = useState(false);
   const [deleteModalOpened, setDeleteModalOpened] = useState(false);
   const [loading, setLoading] = useState(false);
-  //Use Form
+
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -37,11 +37,25 @@ function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
           : "Knowledge must be of at least 20 character",
     },
   });
+  //Function to handel delete
+  async function handelDeleteKnowledge(id) {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    try {
+      await api.delete(`/knowledge/${userId}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setDeleteModalOpened(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 
   //Update in Database
   async function updateKnowledge() {
     const userId = localStorage.getItem("userId");
-    setLoading(true);
     try {
       await api.patch("/knowledge/update", {
         userId,
@@ -49,15 +63,35 @@ function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
         paragraph: form.getValues().newKnowledge,
         category: form.getValues().newCategory,
       });
-      getKnowledge();
-      setOpened(false); //Close the modal on success
-      toast.success("Knowledge updated");
+      setUpdateModelOpened(false);
     } catch (e) {
       console.log(e);
-    } finally {
-      setLoading(false);
     }
   }
+
+  //Mutation for deletion
+  const deleteKnowledgeMutation = useMutation({
+    mutationFn: handelDeleteKnowledge,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["knowledge"]);
+      toast.success("Knowledge Deleted");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  //Mutation for update
+  const updateKnowledgeMutation = useMutation({
+    mutationFn: updateKnowledge,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["knowledge"]);
+      toast.success("Knowledge updated");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   return (
     <Box>
@@ -71,7 +105,7 @@ function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
             size={25}
             color="#1C7ED6"
             cursor={"pointer"}
-            onClick={() => setOpened(true)}
+            onClick={() => setUpdateModelOpened(true)}
           />
           <MdDelete
             size={25}
@@ -83,11 +117,11 @@ function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
       </Paper>
       {/* ------------------Update Modal----------------------- */}
       <Modal
-        opened={opended}
-        onClose={() => setOpened(false)}
+        opened={updateModelOpened}
+        onClose={() => setUpdateModelOpened(false)}
         title="Update Knowledge"
       >
-        <form onSubmit={form.onSubmit(updateKnowledge)}>
+        <form onSubmit={form.onSubmit(updateKnowledgeMutation.mutate)}>
           <Textarea
             autosize
             label="New Paragraph"
@@ -123,8 +157,8 @@ function Knowledge({ data, handelDeleteKnowledge, getKnowledge }) {
           </Button>
           <Button
             color="red"
-            onClick={() => handelDeleteKnowledge(data.id)}
-            loading={loading}
+            onClick={() => deleteKnowledgeMutation.mutate(data.id)}
+            loading={deleteKnowledgeMutation.isPending}
           >
             Delete
           </Button>

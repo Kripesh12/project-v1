@@ -55,8 +55,8 @@ export default function Statistics() {
     const aggregatedCountryData = aggregatedData(countriesDetail);
     const paginatedData = aggregatedCountryData.slice(startIndex, endIndex);
 
-    const rows = paginatedData.map((element) => (
-      <Table.Tr key={element.id}>
+    const rows = paginatedData.map((element, index) => (
+      <Table.Tr key={index}>
         <Table.Td>{element.country}</Table.Td>
         <Table.Td>{element.count}</Table.Td>
         <Table.Td>
