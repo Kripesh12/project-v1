@@ -7,6 +7,7 @@ import {
   Button,
   Paper,
   Container,
+  Flex,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -26,8 +27,16 @@ export default function ContactUs() {
   });
 
   return (
-    <Container p={100} id="contact">
-      <Paper shadow="xl" p={25}>
+    <Container
+      h={"80vh"}
+      id="contact"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Paper shadow="xl" w={"85%"} p={20} withBorder={true}>
         <form onSubmit={form.onSubmit(() => {})}>
           <Title
             order={2}
@@ -35,6 +44,7 @@ export default function ContactUs() {
             style={{ fontFamily: "Greycliff CF, var(--mantine-font-family)" }}
             fw={900}
             ta="center"
+            c={"blue"}
           >
             Get in touch
           </Title>
