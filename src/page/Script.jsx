@@ -61,7 +61,7 @@ function Script() {
               : "API key not defined : Generate API key by filling chatbot details"}
           </Text>
         </Paper>
-        <Text mt={20}>
+        <Box mt={20}>
           {domain ? (
             <Text>
               * This script tag only works on {domain}.
@@ -73,7 +73,7 @@ function Script() {
           ) : (
             ""
           )}
-        </Text>
+        </Box>
       </Box>
     </Center>
   );

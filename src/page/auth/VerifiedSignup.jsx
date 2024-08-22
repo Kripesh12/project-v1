@@ -37,7 +37,7 @@ export default function VerifiedSignup() {
     try {
       setLoading(true);
       await api.post(
-        `/auth/register/?role=user`,
+        `/auth/register`,
         {
           name: form.getValues().name,
           password: form.getValues().password,

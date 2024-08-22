@@ -36,6 +36,7 @@ export default function ForgetPasswordPage() {
         email: form.getValues().email,
       });
       toast.success("Reset email send");
+      form.reset();
     } catch (e) {
       toast.error(e.response.data.message);
     } finally {
